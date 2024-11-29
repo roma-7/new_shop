@@ -2,7 +2,7 @@
 set -e
 
 # Replace {YOUR_GIT_REOPO_URL} with your actual Git repository URL
-GIT_REPO_URL="https://github.com/roma-7/shop.git"
+GIT_REPO_URL="https://github.com/roma-7/new_shop"
 
 # If using Private Repo
 #GIT_REPO_URL="https://<your_username>:<your_PAT>@github.com/codewithmuh/django-aws-ec2-autoscaling.git"
