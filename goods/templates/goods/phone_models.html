@@ -1,0 +1,208 @@
+{% comment %}phone_model.html{% endcomment %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Выбор модели телефона</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      
+      body {
+        background-color: #f5f6fa;
+      }
+      
+      /* Header styles */
+      .navbar {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 15px 20px;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+      }
+      
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #2c3e50;
+        text-decoration: none;
+      }
+      
+      .nav-links {
+        display: flex;
+        gap: 25px;
+        align-items: center;
+      }
+      
+      .nav-link {
+        color: #2c3e50;
+        text-decoration: none;
+        font-size: 16px;
+        padding: 8px 15px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+      }
+      
+      .nav-link:hover {
+        background: #f0f2f5;
+      }
+      
+      /* Breadcrumb styles */
+      .breadcrumb {
+        margin: 80px auto 20px;
+        max-width: 1200px;
+        padding: 20px;
+      }
+      
+      .breadcrumb a {
+        color: #3498db;
+        text-decoration: none;
+      }
+      
+      /* Main content */
+      .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      
+      .page-title {
+        font-size: 24px;
+        color: #2c3e50;
+        margin-bottom: 30px;
+      }
+      
+      .brands-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+      }
+      
+      .brand-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+      
+      .brand-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+      
+      .brand-logo {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #f8f9fa;
+      }
+      
+      .brand-logo i {
+        font-size: 40px;
+        color: #2c3e50;
+      }
+      
+      .brand-name {
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: bold;
+        color: #2c3e50;
+      }
+      
+      .models-count {
+        color: #7f8c8d;
+        font-size: 14px;
+      }
+      
+      .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #3498db;
+        text-decoration: none;
+        margin-bottom: 20px;
+      }
+      
+      .back-button:hover {
+        color: #2980b9;
+      }
+      
+      @media (max-width: 768px) {
+        .brands-grid {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="{% url 'goods:categories' %}" class="logo"><i class="fas fa-mobile-alt"></i> Softy</a>
+
+        <div class="nav-links">
+          <a href="{% url 'goods:categories' %}" class="nav-link">
+            <i class="fas fa-home"></i>
+            Главная
+          </a>
+          <a href="{% url 'users:control-panel' %}" class="nav-link">
+            <i class="fas fa-user"></i>
+            Профиль
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- phone_model.html -->
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="{% url 'goods:categories' %}">Главная</a> /
+      <a href="#">{{ category.category_name }}</a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <a href="{% url 'goods:categories' %}" class="back-button"><i class="fas fa-arrow-left"></i> Назад к категориям</a>
+
+      <h1 class="page-title">Модели {{ category.category_name }}</h1>
+      <div class="brands-grid">
+        {% for phone_model in phone_models %}
+          <a href="{% url 'goods:product_catalog' category.id phone_model.id %}" class="brand-card">
+            <div class="brand-logo">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h2 class="brand-name">{{ phone_model.phone_name }}</h2>
+            <p class="models-count">{{ phone_model.models.count }} моделей</p>
+          </a>
+        {% empty %}
+          <p class="no-models">Нет доступных моделей</p>
+        {% endfor %}
+      </div>
+    </main>
+  </body>
+</html>

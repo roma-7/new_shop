@@ -1,0 +1,258 @@
+{% block content %}
+  <!DOCTYPE html>
+  <html lang="ru">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Подключение Telegram чата</title>
+      <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        body {
+          background: #f8fafc;
+          padding: 20px;
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        
+        .connect-container {
+          max-width: 600px;
+          width: 100%;
+          background: white;
+          border-radius: 16px;
+          box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+          padding: 32px;
+        }
+        
+        .header {
+          text-align: center;
+          margin-bottom: 32px;
+        }
+        
+        .telegram-icon {
+          width: 64px;
+          height: 64px;
+          background: #229ed9;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 16px;
+        }
+        
+        h1 {
+          color: #1f2937;
+          font-size: 24px;
+          margin-bottom: 8px;
+        }
+        
+        .subtitle {
+          color: #6b7280;
+          font-size: 16px;
+        }
+        
+        .steps-container {
+          margin: 32px 0;
+          padding: 24px;
+          background: #f8fafc;
+          border-radius: 12px;
+        }
+        
+        .step {
+          display: flex;
+          gap: 16px;
+          margin-bottom: 24px;
+        }
+        
+        .step:last-child {
+          margin-bottom: 0;
+        }
+        
+        .step-number {
+          width: 28px;
+          height: 28px;
+          background: #229ed9;
+          color: white;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 500;
+          flex-shrink: 0;
+        }
+        
+        .step-content {
+          flex-grow: 1;
+        }
+        
+        .step-title {
+          font-weight: 500;
+          color: #1f2937;
+          margin-bottom: 4px;
+        }
+        
+        .step-description {
+          color: #6b7280;
+          font-size: 14px;
+          line-height: 1.5;
+        }
+        
+        .form-group {
+          margin-bottom: 24px;
+        }
+        
+        .form-label {
+          display: block;
+          font-weight: 500;
+          color: #1f2937;
+          margin-bottom: 8px;
+        }
+        
+        .form-input {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid #e5e7eb;
+          border-radius: 8px;
+          font-size: 14px;
+          transition: border-color 0.2s;
+        }
+        
+        .form-input:focus {
+          outline: none;
+          border-color: #229ed9;
+          box-shadow: 0 0 0 3px rgba(34, 158, 217, 0.1);
+        }
+        
+        .form-help {
+          font-size: 12px;
+          color: #6b7280;
+          margin-top: 4px;
+        }
+        
+        .connect-button {
+          width: 100%;
+          background: #229ed9;
+          color: white;
+          border: none;
+          padding: 12px;
+          border-radius: 8px;
+          font-size: 16px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background-color 0.2s;
+        }
+        
+        .connect-button:hover {
+          background: #1e88c3;
+        }
+        
+        @media (max-width: 640px) {
+          .connect-container {
+            padding: 24px;
+          }
+        
+          .steps-container {
+            padding: 16px;
+          }
+        
+          h1 {
+            font-size: 20px;
+          }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="connect-container">
+        <div class="header">
+          <div class="telegram-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+              <path d="M20.665,3.717l-17.73,6.837c-1.21,0.486-1.203,1.161-0.222,1.462l4.552,1.42l10.532-6.645 c0.498-0.303,0.953-0.14,0.579,0.192l-8.533,7.701l-0.332,4.99c0.322,0,0.464-0.147,0.664-0.319l1.593-1.547l4.164,3.074 c0.767,0.422,1.317,0.205,1.508-0.71l2.749-12.945C20.418,4.657,20.994,4.091,20.665,3.717z" />
+            </svg>
+          </div>
+          <h1>Подключение Telegram чата</h1>
+          <p class="subtitle">Настройте чат для получения уведомлений</p>
+        </div>
+
+        {% if messages %}
+          <div class="messages">
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="steps-container">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">Открыть Telegram</div>
+              <div class="step-description">Убедитесь, что у вас установлен Telegram, и вы вошли в свой аккаунт.</div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">Перейти к боту</div>
+              <div class="step-description">Выполните поиск в Telegram по запросу @getmyid_bot. Откройте чат с ботом. Нажмите кнопку "Start" (или "Начать"), чтобы активировать бота.</div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">Получить Chat ID</div>
+              <div class="step-description">После запуска бот автоматически отправит вам сообщение с вашим Chat ID. Скопируйте и вставьте его здесь!</div>
+            </div>
+          </div>
+        </div>
+
+        <form method="POST" id="chatForm">
+          {% csrf_token %}
+          <div class="form-group">
+            <label class="form-label">Chat ID</label>
+            <input type="text" name="chat_id" class="form-input" placeholder="Например: -1001234567890" />
+            <p class="form-help">Chat ID должен начинаться с минуса для групп или положительное число для личных чатов</p>
+          </div>
+
+          <button type="submit" class="connect-button">Подключить чат</button>
+        </form>
+      </div>
+
+      <script>
+        document.getElementById('chatForm').addEventListener('submit', function (e) {
+          e.preventDefault()
+        
+          const formData = new FormData(this)
+        
+          fetch("{% url 'notification:connect_telegram' %}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'X-CSRFToken': '{{ csrf_token }}'
+            }
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status === 'success') {
+                window.location.reload()
+              } else {
+                alert('Ошибка: ' + data.message)
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error)
+              alert('Произошла ошибка при подключении чата')
+            })
+        })
+      </script>
+    </body>
+  </html>
+{% endblock %}

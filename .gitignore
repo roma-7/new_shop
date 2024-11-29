@@ -1,0 +1,30 @@
+# Python  
+*.pyc  
+__pycache__/  
+*.pyo  
+*.pyd  
+env/  
+venv/  
+*.env  
+
+# Django  
+*.sqlite3  
+db.sqlite3  
+/static/  
+media/  
+
+# IDEs  
+.idea/  
+.vscode/  
+
+# другие файлы, которые не следует добавлять  
+*.log  
+*.pot  
+*.py[cod]
+
+
+
+*celery
+*celerybeat*
+*celerydb.sqlite
+

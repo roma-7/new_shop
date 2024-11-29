@@ -1,0 +1,218 @@
+{% load i18n %}
+{% load account %}
+{% load allauth %}
+
+
+{% block content %}
+<style>
+    .confirmation-container {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f0f4ff 0%, #e6eeff 100%);
+        padding: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .confirmation-card {
+        background: white;
+        max-width: 500px;
+        width: 90%;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        padding: 2.5rem;
+        text-align: center;
+    }
+
+    .email-icon {
+        width: 80px;
+        height: 80px;
+        background: #3b82f6;
+        border-radius: 50%;
+        margin: 0 auto 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .email-icon svg {
+        width: 40px;
+        height: 40px;
+        fill: white;
+    }
+
+    .title {
+        color: #1f2937;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+    }
+
+    .description {
+        color: #4b5563;
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+    }
+
+    .email-link {
+        color: #3b82f6;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .email-link:hover {
+        color: #2563eb;
+        text-decoration: underline;
+    }
+
+    .confirm-button {
+        background: #3b82f6;
+        color: white;
+        border: none;
+        padding: 12px 32px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(59, 130, 246, 0.25);
+    }
+
+    .confirm-button:hover {
+        background: #2563eb;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(59, 130, 246, 0.3);
+    }
+
+    .error-message {
+        background: #fee2e2;
+        border-left: 4px solid #ef4444;
+        padding: 1rem;
+        margin: 1rem 0;
+        text-align: left;
+        border-radius: 8px;
+    }
+
+    .warning-message {
+        background: #fff7ed;
+        border-left: 4px solid #f97316;
+        padding: 1rem;
+        margin: 1rem 0;
+        text-align: left;
+        border-radius: 8px;
+    }
+
+    .message-content {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .message-icon {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+    }
+
+    .message-text {
+        color: #1f2937;
+        font-size: 14px;
+        margin: 0;
+    }
+
+    .navigation-links {
+        margin-top: 1.5rem;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .nav-link {
+        color: #4b5563;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #3b82f6;
+    }
+</style>
+
+<div class="confirmation-container">
+    <div class="confirmation-card">
+        <!-- Email Icon -->
+        <div class="email-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+        </div>
+
+        <!-- Title -->
+        {% element h1 %}
+            <div class="title">Подтверждение адреса электронной почты</div>
+        {% endelement %}
+
+        <!-- Content -->
+        {% if confirmation %}
+            {% user_display confirmation.email_address.user as user_display %}
+            {% if can_confirm %}
+                {% element p %}
+                    <div class="description">
+                        Пожалуйста, подтвердите, что <a href="mailto:{{ confirmation.email_address.email }}" class="email-link">{{ confirmation.email_address.email }}</a> является адресом электронной почты для пользователя {{ user_display }}.
+                    </div>
+                {% endelement %}
+
+                {% url 'account_confirm_email' confirmation.key as action_url %}
+                {% element form method="post" action=action_url %}
+                    {% slot actions %}
+                        {% csrf_token %}
+                        {{ redirect_field }}
+                        {% element button type="submit" %}
+                            <button type="submit" class="confirm-button">
+                                Подтвердить
+                            </button>
+                        {% endelement %}
+                    {% endslot %}
+                {% endelement %}
+            {% else %}
+                {% element p %}
+                    <div class="warning-message">
+                        <div class="message-content">
+                            <svg class="message-icon" fill="#f97316" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
+                            <p class="message-text">
+                                Невозможно подтвердить {{ email }}, так как этот адрес уже подтвержден другим аккаунтом.
+                            </p>
+                        </div>
+                    </div>
+                {% endelement %}
+            {% endif %}
+        {% else %}
+            {% url 'account_email' as email_url %}
+            {% element p %}
+                <div class="error-message">
+                    <div class="message-content">
+                        <svg class="message-icon" fill="#ef4444" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-9v4a1 1 0 102 0V9a1 1 0 10-2 0zm1-3a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
+                        </svg>
+                        <p class="message-text">
+                            Срок действия ссылки для подтверждения истек или она недействительна. Пожалуйста, <a href="{{ email_url }}" class="email-link">запросите новое подтверждение</a>.
+                        </p>
+                    </div>
+                </div>
+            {% endelement %}
+        {% endif %}
+
+        <!-- Navigation Links -->
+        <div class="navigation-links">
+            <a href="/accounts/login/" class="nav-link">Войти</a>
+            <a href="/accounts/signup/" class="nav-link">Регистрация</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

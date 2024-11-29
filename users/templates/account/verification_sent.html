@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение аккаунта</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            padding: 3rem;
+            max-width: 90%;
+            width: 500px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-icon-wrapper {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #00f2c3, #0098f0);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .success-icon::before {
+            content: '';
+            width: 40px;
+            height: 20px;
+            border: 5px solid white;
+            border-top: 0;
+            border-right: 0;
+            transform: rotate(-45deg);
+            margin-top: -4px;
+        }
+
+        .dots {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            pointer-events: none;
+            animation: rotate 10s linear infinite;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes rotate {
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .dot {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: dotPulse 2s infinite;
+        }
+
+        @keyframes dotPulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .dot:nth-child(1) { background: #FF416C; top: 0; left: 50%; animation-delay: 0s; }
+        .dot:nth-child(2) { background: #4158D0; top: 25%; right: 0; animation-delay: 0.2s; }
+        .dot:nth-child(3) { background: #00F2C3; bottom: 25%; right: 0; animation-delay: 0.4s; }
+        .dot:nth-child(4) { background: #0098F0; bottom: 0; left: 50%; animation-delay: 0.6s; }
+        .dot:nth-child(5) { background: #4158D0; bottom: 25%; left: 0; animation-delay: 0.8s; }
+        .dot:nth-child(6) { background: #FF416C; top: 25%; left: 0; animation-delay: 1s; }
+
+        h1 {
+            color: #1a1a1a;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .main-text {
+            color: #2d3748;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .info-title {
+            color: #2d3748;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-title::before {
+            content: "ℹ️";
+        }
+
+        .info-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .info-list li {
+            color: #4a5568;
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .info-list li::before {
+            content: "•";
+            color: #0098f0;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .note {
+            color: #718096;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .help-text {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .help-link {
+            color: #0098f0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .help-link:hover {
+            color: #0069d9;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 2rem;
+            }
+
+            .success-icon {
+                width: 80px;
+                height: 80px;
+            }
+
+            .success-icon::before {
+                width: 32px;
+                height: 16px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .main-text {
+                font-size: 1rem;
+            }
+
+            .info-box {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon-wrapper">
+            <div class="dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <div class="success-icon"></div>
+        </div>
+        
+        <h1>Почти готово!</h1>
+        <p class="main-text">На вашу электронную почту была отправлена ссылка для подтверждения аккаунта.</p>
+
+        <div class="info-box">
+            <div class="info-title">Что дальше?</div>
+            <ul class="info-list">
+                <li>Проверьте свой почтовый ящик (включая папку "Спам")</li>
+                <li>Перейдите по ссылке в письме для подтверждения</li>
+                <li>После подтверждения вы получите доступ ко всем функциям аккаунта</li>
+                <li>Ссылка действительна в течение 24 часов</li>
+            </ul>
+        </div>
+
+        <p class="note">
+            Письмо может прийти в течение нескольких минут. Если вы не получили письмо, проверьте папку "Спам".
+        </p>
+
+        <p class="help-text">
+    Возникли проблемы? <a href="https://wa.me/+996551708033" class="help-link">Обратитесь в службу поддержки</a>
+</p>
+
+    </div>
+</body>
+</html>

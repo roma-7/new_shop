@@ -1,0 +1,83 @@
+{# periodic_report.html #}
+{% extends 'analytics/base_analytics.html' %}
+{% load custom_filters %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">Периодический отчет</h2>
+    </div>
+
+    <div class="card-content">
+      <form method="get" class="form-container">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+          <div class="form-group">
+            <label class="form-label" for="start_date">Начало периода</label>
+            <input type="date" id="start_date" name="start_date" value="{{ request.GET.start_date }}" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="end_date">Конец периода</label>
+            <input type="date" id="end_date" name="end_date" value="{{ request.GET.end_date }}" class="form-input" />
+          </div>
+        </div>
+        <div style="text-align: right; margin-top: 20px;">
+          <button type="submit" class="form-button">Сформировать отчет</button>
+        </div>
+      </form>
+
+      {% if reports %}
+        <div class="stats-grid">
+          <div class="stat-card blue">
+            <div class="stat-title">Общая выручка</div>
+            <div class="stat-value">{{ total_data.revenue_sum|floatformat:2 }} с</div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-title">Общие затраты</div>
+            <div class="stat-value">{{ total_data.total_cost|floatformat:2 }} с</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-title">Общая прибыль</div>
+            <div class="stat-value">{{ total_data.total_profit|floatformat:2 }} с</div>
+          </div>
+          <div class="stat-card purple">
+            <div class="stat-title">Средняя маржа</div>
+            <div class="stat-value">{{ total_data.average_profit_margin|floatformat:1 }}%</div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-title">Всего продано</div>
+            <div class="stat-value">{{ total_data.total_sales }} шт.</div>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Категория</th>
+                <th>Количество продаж</th>
+                <th>Выручка</th>
+                <th>Себестоимость</th>
+                <th>Прибыль</th>
+                <th>Маржа</th>
+                <th>Средняя цена</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for report in reports %}
+                <tr>
+                  <td>{{ report.category.category_name|default:'Без категории' }}</td>
+                  <td>{{ report.total_quantity_sold }}</td>
+                  <td>{{ report.total_revenue|floatformat:2 }} с</td>
+                  <td>{{ report.total_cost|floatformat:2 }} с</td>
+                  <td>{{ report.total_profit|floatformat:2 }} с</td>
+                  <td>{{ report.profit_margin|floatformat:1 }}%</td>
+                  <td>{{ report.avg_price|floatformat:2 }} с</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ - Часто задаваемые вопросы</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f8fa;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+      
+      .faq-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      
+      .faq-title {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        color: #222;
+        margin-bottom: 10px;
+      }
+      
+      .faq-subtitle {
+        font-size: 16px;
+        text-align: center;
+        color: #666;
+        margin-bottom: 20px;
+      }
+      
+      .faq-subtitle a {
+        color: #0073e6;
+        text-decoration: none;
+      }
+      
+      .faq-filters {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 30px;
+      }
+      
+      .filter-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+        border: none;
+        border-radius: 20px;
+        background-color: #f1f3f5;
+        color: #333;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      
+      .filter-btn.active,
+      .filter-btn:hover {
+        background-color: #0073e6;
+        color: #fff;
+      }
+      
+      .faq-list {
+        border-top: 1px solid #e0e0e0;
+      }
+      
+      .faq-item {
+        border-bottom: 1px solid #e0e0e0;
+        padding: 15px 0;
+      }
+      
+      .faq-question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+      }
+      
+      .faq-question h3 {
+        font-size: 18px;
+        margin: 0;
+        color: #333;
+      }
+      
+      .faq-icon {
+        font-size: 24px;
+        color: #0073e6;
+        transition: transform 0.3s;
+      }
+      
+      .faq-answer {
+        display: none;
+        margin-top: 10px;
+        font-size: 16px;
+        color: #555;
+        line-height: 1.6;
+      }
+      
+      .faq-item.active .faq-answer {
+        display: block;
+      }
+      
+      .faq-item.active .faq-icon {
+        transform: rotate(45deg);
+      } /* Кнопка назад */
+      .back-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #4a5568;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        transition: background-color 0.2s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="faq-container">
+      <a href="{% url 'goods:categories' %}" class="back-button">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>Назад
+      </a>
+      <h1 class="faq-title">Часто задаваемые вопросы</h1>
+      <p class="faq-subtitle">
+        Это наиболее часто задаваемые вопросы о нашем сервисе. Не можете найти то, что ищете?<a href="https://t.me/+bww_ZWotir0yMWQy">Тогда Общайтесь в нашу дружную команду!</a>
+      </p>
+
+      <div class="faq-filters">
+        <button class="filter-btn active" data-filter="all">Общие вопросы</button>
+        <button class="filter-btn" data-filter="basic_function">Основные функции</button>
+        <button class="filter-btn" data-filter="dashboard">Управление пользователями</button>
+        <button class="filter-btn" data-filter="analytics">Продажи и аналитика</button>
+        <button class="filter-btn" data-filter="product">Управление товарами</button>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item" data-category="general">
+          <div class="faq-question">
+            <h3>Что произойдёт, если я удалю товар из системы?</h3>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Мы не советуем удалять товар без необходимости, так как это повлечет за собой потерю аналитики, связанной с ним. Если вы создали товар по ошибке, вы можете его удалить, и это будет допустимо.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="basic_function">
+          <div class="faq-question">
+            <h3>Какие действия строго запрещены и на что нужно обратить внимание?</h3>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Мы настоятельно рекомендуем воздерживаться от любых действий, которые могут считаться запрещенными. Если вы столкнулись с какой-либо проблемой или у вас возникли вопросы по поводу непонятного отрицательного элемента, обязательно обращайтесь к нам. Мы готовы помочь вам и сделаем все возможное, чтобы исправить данную ситуацию!</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="basic_function">
+          <div class="faq-question">
+            <h3>Как мне управлять своими продавцами и какой вариант лучше?</h3>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Мы организовали систему, при которой каждый продавец имеет свой аккаунт и должен ответственно к нему относиться. Вы также должны контролировать своих продавцов не только в этой системе, но и в работе!</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="analytics">
+          <div class="faq-question">
+            <h3>Какие типы данных можно анализировать в системе?</h3>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Вы можете проанализировать все продажи, сделанные вами и вашим продавцом. Вы сможете увидеть важные аспекты, такие как прибыль и скидки. Это поможет вам лучше понять свои финансовые показатели и оценить работу продавца.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="analytics">
+          <div class="faq-question">
+            <h3>Есть ли возможность экспорта данных?</h3>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Да, можно, но мы предлагали вам лучший вариант — отправку аналитики через телеграм-бота!</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="analytics">
+          <div class="faq-question">
+            <h3>Индивидуальная скидка - это что?</h3>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Индивидуальная скидка — это когда вы предоставляете клиенту скидку в определённой сумме. Например, если вы сделали скидку в 100 сом, то эта сумма будет вычтена из цены товара.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="analytics">
+          <div class="faq-question">
+            <h3>Почему QR-код нужен ?</h3>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Мы добавили QR-код, чтобы облегчить работу продавца. Теперь продавец в любой момент может быстро узнать цену товара, просто отсканировав этот QR-код!
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="dashboard">
+          <div class="faq-question">
+            <h3>Как изменить адрес электронной почты моей учетной записи?</h3>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Вы можете изменить свой адрес электронной почты в разделе настроек учетной записи на панели управления.</p>
+          </div>
+        </div>
+
+
+          <div class="faq-item" data-category="dashboard">
+          <div class="faq-question">
+            <h3>Как узнать, подключен ли мой Telegram-бот?</h3>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Чтобы узнать, подключен ли ваш Telegram-бот, вы можете посмотреть когда вы отправили CHAT-ID! там вам будет уведомление !</p>
+          </div>
+        </div>
+
+
+        <div class="faq-item" data-category="dashboard">
+          <div class="faq-question">
+            <h3>Как удалить аккаунт?</h3>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Мы рекомендуем обратиться к администратору для удаления аккаунта. При этом вы сможете получить все необходимые данные, связанные с вашим аккаунтом.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="dashboard">
+          <div class="faq-question">
+            <h3>Как восстановить аккаунт?</h3>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Это невозможно! Поэтому вам стоит дважды подумать, прежде чем принимать решение о удалении.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="product">
+          <div class="faq-question">
+            <h3>Как добавить новый товар в систему?</h3>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Вы можете добавить новый товар в своем профиле, посетив раздел "Панель управления", где это можно сделать очень просто и удобно!</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="product">
+          <div class="faq-question">
+            <h3>Как изменить информацию о товаре?</h3>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Вы можете добавить изменить и удалить товар посетив разделе "Панель управления" и там есть кнопка " Действия" где это можно сделать очень просто и удобно! Если товара нет в этом разделе, попробуйте найти его в каталоге и внести изменения там.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="product">
+          <div class="faq-question">
+            <h3>Как обновить количество на складе?</h3>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Вы можете изменить или обновить количество товара в разделе "Панель управления", где имеется кнопка "Действия". Если товара нет в этом разделе, попробуйте найти его в каталоге и внести изменения там.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="product">
+          <div class="faq-question">
+            <h3>Как найти товар в каталоге правильно и быстро?!</h3>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Найти товар в каталоге очень легко! Используйте функцию поиска и сортировки по моделям, чтобы быстро найти нужный товар.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="product">
+          <div class="faq-question">
+            <h3>Как изменить категорию товара?</h3>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>К сожалению, изменить категорию или модель товара нельзя. Однако вы можете удалить товар и правильно загрузить его в следующий раз. Также вы можете обратиться к владельцу для получения дополнительной помощи.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const faqItems = document.querySelectorAll('.faq-item')
+      const filterButtons = document.querySelectorAll('.filter-btn')
+      
+      // Функция для фильтрации вопросов
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          // Убираем активный класс с других кнопок и добавляем к текущей
+          filterButtons.forEach((btn) => btn.classList.remove('active'))
+          button.classList.add('active')
+      
+          const category = button.getAttribute('data-filter')
+      
+          faqItems.forEach((item) => {
+            const itemCategory = item.getAttribute('data-category')
+            if (category === 'all' || itemCategory === category) {
+              item.style.display = 'block'
+            } else {
+              item.style.display = 'none'
+            }
+          })
+        })
+      })
+      
+      // Открытие и закрытие ответов на вопросы
+      faqItems.forEach((item) => {
+        item.querySelector('.faq-question').addEventListener('click', () => {
+          item.classList.toggle('active')
+        })
+      })
+    </script>
+  </body>
+</html>

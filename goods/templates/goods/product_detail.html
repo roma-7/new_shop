@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ product.product_name }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f6fa;
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #2c3e50;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: #f0f2f5;
+        }
+
+        .breadcrumb {
+            margin: 80px auto 20px;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        .breadcrumb a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .product-gallery {
+            display: grid;
+            gap: 20px;
+        }
+
+        .main-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background: #f8f9fa;
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .thumbnail {
+            aspect-ratio: 1;
+            background: #f8f9fa;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.05);
+        }
+
+        .thumbnail.active {
+            border: 2px solid #3498db;
+        }
+
+        .product-info h1 {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-size: 28px;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .product-description {
+            margin: 30px 0;
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+        .features-list {
+            margin: 30px 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .feature-icon {
+            color: #3498db;
+        }
+
+        .add-to-cart {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            border: 2px solid #e1e8ed;
+            border-radius: 25px;
+        }
+
+        .quantity button {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: #3498db;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .quantity button:hover {
+            background: #f0f2f5;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #3498db;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .back-button:hover {
+            background: #f8f9fa;
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: 1fr;
+            }
+        }
+                .edit-button {
+            flex: 1;
+            background: #3498db;
+            color: white;
+            border: none;
+                text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .edit-button:hover {
+            background: #2980b9;
+        }
+
+
+        }
+        .cart-button {
+            flex: 1;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .cart-button:hover {
+            background: #2980b9;
+        }
+
+
+        }
+            /* Обновленные стили для изображений */
+    .main-image {
+        width: 100%;
+        height: 400px; /* Фиксированная высота */
+        background: #f8f9fa;
+        border-radius: 15px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .main-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* Сохраняет пропорции изображения */
+    }
+
+    .thumbnail {
+        width: 100px;
+        height: 100px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    /* Стили для активного thumbnail */
+    .thumbnail.active {
+        border: 2px solid #3498db;
+    }
+    #status-message {
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.stock {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+}
+.cart-button {
+    flex: 1;
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.cart-button:hover {
+    background: #2980b9;
+}
+
+.cart-button:active {
+    transform: scale(0.98);
+}
+
+/* Стили для кнопок количества */
+.quantity-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #3498db;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.quantity-btn:hover {
+    background: #f0f2f5;
+}
+
+.quantity-btn:active {
+    transform: scale(0.95);
+}
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      
+      .modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      
+      .modal-content h2 {
+        margin-bottom: 20px;
+        font-size: 20px;
+        color: #333;
+      }
+      
+      .modal-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      
+      .confirm-button, .cancel-button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      
+      .confirm-button {
+        background: #3498db;
+        color: white;
+      }
+      
+      .confirm-button:hover {
+        background: #2980b9;
+      }
+      
+      .cancel-button {
+        background: #e74c3c;
+        color: white;
+      }
+      
+      .cancel-button:hover {
+        background: #c0392b;
+      }
+.cart-button {
+    padding: 12px 24px;
+    border: none;
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cart-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #27ae60, #219a52);
+}
+
+.cart-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cart-button i {
+    font-size: 18px;
+}
+
+.cart-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Стили для модального окна */
+#confirmModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: modalAppear 0.3s ease-out;
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-content p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.modal-content #confirm-quantity {
+    font-weight: bold;
+    color: #2ecc71;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+#confirmSell {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+#cancelSell {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+/* Стили для всплывающего уведомления */
+#status-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1100;
+    max-width: 350px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    color: white;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.4s ease-out;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+#status-message.success {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+#status-message.error {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+/* Стили для кнопок количества */
+.quantity {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-right: 20px;
+}
+
+.quantity-btn {
+    width: 36px;
+    height: 36px;
+    border: 2px solid #2ecc71;
+    background: white;
+    color: #2ecc71;
+    font-size: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quantity-btn:hover {
+    background: #2ecc71;
+    color: white;
+}
+
+.quantity-btn:disabled {
+    border-color: #ccc;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+#selected-quantity {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    min-width: 30px;
+    text-align: center;
+}
+
+    
+    </style>
+  </head>
+  <body>
+    <!-- goods/templates/goods/product_detail.html -->
+    {% csrf_token %}
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="{% url 'goods:categories' %}" class="logo"><i class="fas fa-mobile-alt"></i> Softy</a>
+        <div class="nav-links">
+          <a href="{% url 'goods:categories' %}" class="nav-link">
+            <i class="fas fa-home"></i>
+            Главная
+          </a>
+          <a href="{% url 'users:control-panel' %}" class="nav-link">
+            <i class="fas fa-user"></i>
+            Профиль
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="breadcrumb">
+      <button onclick="history.back()" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Назад
+      </button>
+    </div>
+
+    <div id="status-message" class="mt-3" style="display: none;"></div>
+
+    <main class="main-content">
+      <div class="product-container">
+        <div class="product-gallery">
+          <div class="main-image">
+            {% if product.images.first.image_front %}
+              <img id="mainImage" src="{{ product.images.first.image_front.url }}" alt="{{ product.product_name }}" />
+            {% else %}
+              <img id="mainImage" src="/api/placeholder/400/400" alt="Изображение недоступно" />
+            {% endif %}
+          </div>
+          <div class="thumbnail-grid">
+            {% if product.images.first.image_front %}
+              <div class="thumbnail active" data-image="{{ product.images.first.image_front.url }}">
+                <img src="{{ product.images.first.image_front.url }}" alt="Вид спереди" />
+              </div>
+            {% endif %}
+            {% if product.qr_code and product.qr_code.url %}
+              <div class="thumbnail" data-image="{{ product.qr_code.url }}">
+                <img src="{{ product.qr_code.url }}" alt="QR-код {{ product.product_name }}" />
+              </div>
+            {% else %}
+              <div class="thumbnail">
+                <img src="/static/placeholder.png" alt="Изображение недоступно" />
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="product-info">
+          <h1>{{ product.product_name }}</h1>
+          <p class="price">{{ product.price }} ₽</p>
+          <p class="product-description">{{ product.description }}</p>
+          <p class="stock">
+            В наличии: <span id="available-quantity">{{ product.quantity }}</span> шт.
+          </p>
+          <div class="discount-field">
+            <label for="custom_discount">Индивидуальная скидка (₽):</label>
+            <input type="number" id="custom_discount" name="custom_discount" min="0" max="{{ product.price }}" step="0.01" placeholder="0.00" onchange="validateDiscount(this)" />
+          </div>
+          <div class="add-to-cart">
+            <div class="quantity">
+              <button type="button" class="quantity-btn minus">-</button>
+              <span id="selected-quantity">1</span>
+              <button type="button" class="quantity-btn plus">+</button>
+            </div>
+
+            <button class="cart-button" id="sell-button" data-product-id="{{ product.id }}">
+              <i class="fas fa-shopping-cart"></i>
+              Продать
+            </button>
+          </div>
+        </div>
+        <a class="edit-button" href="{% url 'goods:edit_product' product.pk %}">
+          <i class="fas fa-edit"></i>
+          Редактировать
+        </a>
+      </div>
+    </main>
+
+    <!-- Модальное окно подтверждения -->
+    <div id="confirmModal">
+      <div class="modal-content">
+        <h3 style="margin-bottom: 20px; color: #333;">Подтверждение продажи</h3>
+        <p>
+          Вы действительно хотите продать товар в количестве
+          <span id="confirm-quantity"></span> шт.?
+        </p>
+        <div class="modal-buttons">
+          <button id="confirmSell" class="cart-button">
+            <i class="fas fa-check"></i>
+            Подтвердить
+          </button>
+          <button id="cancelSell" class="cart-button">
+            <i class="fas fa-times"></i>
+            Отмена
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          // Получаем все необходимые элементы
+          const mainImage = document.querySelector('.main-image img');
+          const thumbnails = document.querySelectorAll('.thumbnail');
+          const quantityButtons = document.querySelectorAll('.quantity-btn');
+          const quantitySpan = document.getElementById('selected-quantity');
+          const availableQuantitySpan = document.getElementById('available-quantity');
+          const sellButton = document.getElementById('sell-button');
+          const confirmModal = document.getElementById('confirmModal');
+          const confirmQuantity = document.getElementById('confirm-quantity');
+          const confirmSell = document.getElementById('confirmSell');
+          const cancelSell = document.getElementById('cancelSell');
+          const statusMessage = document.getElementById('status-message');
+          let selectedQuantity = 1;
+
+          // Обработчик кнопок изменения количества
+          quantityButtons.forEach(button => {
+              button.addEventListener('click', function() {
+                  const maxQuantity = parseInt(availableQuantitySpan.textContent);
+                  
+                  if (button.classList.contains('plus') && selectedQuantity < maxQuantity) {
+                      selectedQuantity++;
+                  } else if (button.classList.contains('minus') && selectedQuantity > 1) {
+                      selectedQuantity--;
+                  }
+                  
+                  // Обновляем отображаемое количество
+                  quantitySpan.textContent = selectedQuantity;
+                  
+                  // Деактивируем кнопки при достижении лимитов
+                  document.querySelector('.quantity-btn.plus').disabled = selectedQuantity >= maxQuantity;
+                  document.querySelector('.quantity-btn.minus').disabled = selectedQuantity <= 1;
+              });
+          });
+
+          // Открытие модального окна при нажатии на кнопку "Продать"
+          sellButton.addEventListener('click', function() {
+              const availableQuantity = parseInt(availableQuantitySpan.textContent);
+              if (availableQuantity === 0) {
+                  showStatusMessage('Товар закончился', false);
+                  return;
+              }
+              confirmQuantity.textContent = selectedQuantity;
+              confirmModal.style.display = 'flex';
+          });
+
+          // Закрытие модального окна при нажатии "Отмена"
+          cancelSell.addEventListener('click', function() {
+              confirmModal.style.display = 'none';
+          });
+
+          // Подтверждение продажи
+          confirmSell.addEventListener('click', async function() {
+              const productId = sellButton.dataset.productId;
+              const customDiscount = document.getElementById('custom_discount').value || 0;
+              const formData = new FormData();
+              
+              // Получаем базовую цену товара
+              const priceText = document.querySelector('.price').textContent;
+              const basePrice = parseFloat(priceText.replace(/[^\d.]/g, '')); // Убираем символ валюты и пробелы
+              
+              formData.append('quantity', selectedQuantity);
+              formData.append('discount_value', customDiscount);
+              
+              // Проверка скидки
+              if (parseFloat(customDiscount) > basePrice) {
+                  showStatusMessage('Скидка не может быть больше цены товара', false);
+                  confirmModal.style.display = 'none';
+                  return;
+              }
+              
+              try {
+                  const response = await fetch(`/goods/sell/${productId}/`, {
+                      method: 'POST',
+                      body: formData,
+                      headers: {
+                          'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                      }
+                  });
+
+                  const data = await response.json();
+
+                  if (data.success) {
+                      // Обновляем количество на странице
+                      availableQuantitySpan.textContent = data.remaining_quantity;
+                      showStatusMessage(data.message, true);
+                      
+                      // Если товар закончился, деактивируем кнопку продажи
+                      if (data.remaining_quantity === 0) {
+                          sellButton.disabled = true;
+                          sellButton.style.backgroundColor = '#ccc';
+                      }
+
+                      // Сбрасываем значения
+                      selectedQuantity = 1;
+                      quantitySpan.textContent = selectedQuantity;
+                      document.getElementById('custom_discount').value = '';
+                      
+                      // Обновляем состояние кнопок
+                      document.querySelector('.quantity-btn.plus').disabled = false;
+                      document.querySelector('.quantity-btn.minus').disabled = true;
+                      
+                  } else {
+                      showStatusMessage(data.message, false);
+                  }
+              } catch (error) {
+                  console.error('Ошибка:', error);
+                  showStatusMessage('Произошла ошибка при продаже товара', false);
+              }
+
+              confirmModal.style.display = 'none';
+          });
+      });
+
+      // Функция валидации скидки
+      function validateDiscount(input) {
+          const priceText = document.querySelector('.price').textContent;
+          const price = parseFloat(priceText.replace(/[^\d.]/g, '')); // Убираем символ валюты и пробелы
+          const discountValue = parseFloat(input.value);
+
+          if (discountValue > price) {
+              input.value = price;
+              showStatusMessage('Скидка не может быть больше цены товара', false);
+          }
+          if (discountValue < 0) {
+              input.value = 0;
+              showStatusMessage('Скидка не может быть отрицательной', false);
+          }
+      }
+
+      // Функция для показа статусных сообщений
+function showStatusMessage(message, isSuccess) {
+    const statusMessage = document.getElementById('status-message');
+    statusMessage.textContent = message;
+    statusMessage.className = isSuccess ? 'success' : 'error';
+    
+    // Добавляем иконку
+    const icon = document.createElement('i');
+    icon.className = isSuccess ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+    statusMessage.insertBefore(icon, statusMessage.firstChild);
+    
+    statusMessage.style.display = 'flex';
+    
+    // Анимация исчезновения
+    setTimeout(() => {
+        statusMessage.style.animation = 'slideIn 0.4s ease-out reverse';
+        setTimeout(() => {
+            statusMessage.style.display = 'none';
+            statusMessage.style.animation = '';
+        }, 400);
+    }, 3000);
+}
+  document.querySelectorAll('.thumbnail').forEach(thumbnail => {
+    thumbnail.addEventListener('click', function() {
+      // Изменяем src основного изображения на URL выбранной миниатюры
+      const mainImage = document.getElementById('mainImage');
+      mainImage.src = this.getAttribute('data-image');
+
+      // Снимаем активный класс у всех миниатюр и добавляем его к текущей
+      document.querySelectorAll('.thumbnail').forEach(thumb => thumb.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+  </script>
+  </body>
+</html>

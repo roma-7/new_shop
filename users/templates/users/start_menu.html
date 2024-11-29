@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Softy - Система управления продажами аксессуаров</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', sans-serif;
+      }
+      
+      body {
+        background-color: #f8f9ff;
+      }
+      
+      .header {
+        background: white;
+        padding: 1.2rem 5%;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+      
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: #4361ee;
+        text-decoration: none;
+      }
+      
+      .nav-menu {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+      
+      .nav-link {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+      }
+      
+      .nav-button {
+        background: #4361ee;
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+      
+      .nav-button.secondary {
+        background: transparent;
+        color: #333;
+      }
+      
+      .nav-button:hover {
+        background: #3651d4;
+        transform: translateY(-2px);
+      }
+      
+      .hero {
+        padding: 100px 5%;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+      
+      .hero-content h1 {
+        font-size: 3.5rem;
+        color: #1a1f36;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+      }
+      
+      .hero-content p {
+        font-size: 1.1rem;
+        color: #4f566b;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+      
+      .hero-image {
+        position: relative;
+      }
+      
+      .stats-card {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+      
+      .stat-item {
+        text-align: center;
+      }
+      
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #4361ee;
+        margin-bottom: 0.5rem;
+      }
+      
+      .stat-label {
+        color: #4f566b;
+        font-size: 0.9rem;
+      }
+      
+      .features {
+        padding: 80px 5%;
+        background: white;
+      }
+      
+      .features-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+      
+      .feature-card {
+        background: #f8f9ff;
+        padding: 2rem;
+        border-radius: 16px;
+        transition: all 0.3s ease;
+      }
+      
+      .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(67, 97, 238, 0.1);
+      }
+      
+      .feature-icon {
+        width: 50px;
+        height: 50px;
+        background: #4361ee;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+      }
+      
+      .feature-card h3 {
+        font-size: 1.2rem;
+        color: #1a1f36;
+        margin-bottom: 1rem;
+      }
+      
+      .feature-card p {
+        color: #4f566b;
+        line-height: 1.6;
+      }
+      
+      .brands {
+        padding: 60px 5%;
+        text-align: center;
+      }
+      
+      .brands h2 {
+        font-size: 1.2rem;
+        color: #4f566b;
+        margin-bottom: 2rem;
+      }
+      
+      .brands-grid {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4rem;
+        flex-wrap: wrap;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .brand-logo {
+        height: 30px;
+        opacity: 0.5;
+        transition: opacity 0.3s ease;
+      }
+      
+      .brand-logo:hover {
+        opacity: 1;
+      }
+      
+      @media (max-width: 768px) {
+        .hero {
+          grid-template-columns: 1fr;
+          text-align: center;
+          padding: 60px 5%;
+        }
+      
+        .hero-content h1 {
+          font-size: 2.5rem;
+        }
+      
+        .stats-card {
+          grid-template-columns: 1fr;
+        }
+      
+        .nav-menu {
+          display: none;
+        }
+      }
+      .footer {
+        background: #1a1f36;
+        color: white;
+        padding: 4rem 5% 2rem;
+        margin-top: auto;
+      }
+      
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 4rem;
+      }
+      
+      .footer-column h4 {
+        color: white;
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .footer-column p {
+        color: #a0a3bd;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+      
+      .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .footer-links a {
+        color: #a0a3bd;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      
+      .footer-links a:hover {
+        color: white;
+      }
+      
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      
+      .social-links a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.5rem;
+      }
+      
+      .footer-bottom {
+        max-width: 1200px;
+        margin: 2rem auto 0;
+        padding-top: 2rem;
+        border-top: 1px solid #2d3452;
+        text-align: center;
+        color: #a0a3bd;
+        font-size: 0.9rem;
+      }
+      
+      @media (max-width: 768px) {
+        .footer-container {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+      }
+      
+      /* Добавляем стили для мобильного меню */
+      .mobile-menu-button {
+        display: none;
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+        color: #333;
+        cursor: pointer;
+      }
+      
+      @media (max-width: 768px) {
+        .mobile-menu-button {
+          display: block;
+        }
+      
+        .nav-menu {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: white;
+          flex-direction: column;
+          padding: 1rem;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+      
+        .nav-menu.active {
+          display: flex;
+        }
+      }
+      .cta-section {
+        padding: 80px 5%;
+        background: linear-gradient(135deg, #4361ee0d 0%, #4361ee1a 100%);
+        text-align: center;
+      }
+      
+      .cta-container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      
+      .cta-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+      
+      .cta-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(67, 97, 238, 0.1);
+        transition: all 0.3s ease;
+      }
+      
+      .cta-card:hover {
+        transform: translateY(-5px);
+      }
+      
+      .cta-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+      
+      .cta-card h3 {
+        color: #1a1f36;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      .cta-card p {
+        color: #4f566b;
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+      
+      .start-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: #4361ee;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+      }
+      
+      .start-button:hover {
+        background: #3651d4;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+      }
+      
+      @media (max-width: 768px) {
+        .cta-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <nav class="nav-container">
+        <a href="#" class="logo">Softy</a>
+        <div class="nav-menu">
+          <a href="#features" class="nav-link">Возможности</a>
+          <a href="#analytics" class="nav-link">Аналитика</a>
+          <a href="#pricing" class="nav-link">Цены</a>
+          <a href="{% url 'account_login' %}" class="nav-button secondary">Войти</a>
+          <a href="{% url 'account_signup' %}" class="nav-button">Начать бесплатно</a>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Система управления продажами аксессуаров</h1>
+        <p>Автоматизируйте процессы, отслеживайте продажи и развивайте свой бизнес с помощью современной системы управления</p>
+        <a href="{% url 'account_signup' %}" class="nav-button">Попробовать бесплатно</a>
+
+        <div class="stats-card">
+          <div class="stat-item">
+            <div class="stat-number">Быстрый рост</div>
+            <div class="stat-label">Впечатляющие достижения</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">98%</div>
+            <div class="stat-label">Точность учета</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Поддержка</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-image">
+        <!-- Здесь можно добавить иллюстрацию дашборда -->
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="features-container">
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Аналитика продаж</h3>
+            <p>Детальная статистика и отчеты по всем показателям вашего бизнеса</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📦</div>
+            <h3>Управление запасами</h3>
+            <p>Автоматический учет товаров и уведомления о необходимости пополнения</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔄</div>
+            <h3>Интеграции</h3>
+            <p>Подключение к популярным площадкам и системам оплаты</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="cta-container">
+        <div class="cta-grid">
+          <div class="cta-card">
+            <div class="cta-icon">🚀</div>
+            <h3>Быстрый старт</h3>
+            <p>Начните пользоваться системой уже сегодня. Настройка занимает всего 15 минут</p>
+          </div>
+          <div class="cta-card">
+            <div class="cta-icon">💎</div>
+            <h3>30 дней бесплатно</h3>
+            <p>Оцените все возможности системы в течение месяца без каких-либо обязательств</p>
+          </div>
+          <div class="cta-card">
+            <div class="cta-icon">🤝</div>
+            <h3>Персональный подход</h3>
+            <p>Индивидуальная поддержка и помощь в настройке под ваш бизнес</p>
+          </div>
+        </div>
+        <a href="{% url 'account_signup' %}" class="start-button">Начать бесплатный период ➔</a>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-column">
+          <h4>О Softy</h4>
+          <p>Современное решение для управления продажами аксессуаров, которое помогает бизнесу расти и развиваться</p>
+          <div class="social-links">
+            <a href="#">📱</a>
+            <a href="#">📘</a>
+            <a href="#">🐦</a>
+            <a href="#">📸</a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h4>Продукт</h4>
+          <div class="footer-links">
+            <a href="#">Возможности</a>
+            <a href="#">Интеграции</a>
+            <a href="#">Цены</a>
+            <a href="#">Обновления</a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h4>Компания</h4>
+          <div class="footer-links">
+            <a href="#">О нас</a>
+            <a href="#">Карьера</a>
+            <a href="#">Блог</a>
+            <a href="#">Контакты</a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h4>Поддержка</h4>
+          <div class="footer-links">
+            <a href="#">База знаний</a>
+            <a href="#">Документация</a>
+            <a href="#">Сообщество</a>
+            <a href="#">Техподдержка</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Softy. Все права защищены.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Добавляем функционал мобильного меню
+      const mobileMenuButton = document.querySelector('.mobile-menu-button')
+      const navMenu = document.querySelector('.nav-menu')
+      
+      if (mobileMenuButton && navMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+          navMenu.classList.toggle('active')
+        })
+      }
+    </script>
+  </body>
+</html>

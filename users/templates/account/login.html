@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в аккаунт</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom right, #4F46E5, #E5E7EB);
+            padding: 15px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            background: #4F46E5;
+            border-radius: 8px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 auto 15px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #111827;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6B7280;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 35px 12px 12px;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #4F46E5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: #9CA3AF;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            accent-color: #4F46E5;
+        }
+
+        .remember-forgot label {
+            margin: 0;
+            font-size: 14px;
+            color: #6B7280;
+        }
+
+        .forgot-link {
+            color: #4F46E5;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #4338CA;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #6B7280;
+        }
+
+        .signup-link a {
+            color: #4F46E5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #9CA3AF;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .remember-forgot {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+         .error-message {
+        background-color: #fee2e2;
+        border: 1px solid #fecaca;
+        border-radius: 8px;
+        padding: 12px 16px;
+        margin-bottom: 20px;
+      }
+
+      .error-message ul {
+        list-style: none;
+      }
+
+      .error-message li {
+        color: #dc2626;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+
+      .error-message li:last-child {
+        margin-bottom: 0;
+      }
+
+      .error-message li::before {
+        content: '';
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23dc2626'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E");
+        background-size: contain;
+      }
+
+      .input-wrapper.error input {
+        border-color: #dc2626;
+        background-color: #fef2f2;
+      }
+
+      .input-wrapper.error input:focus {
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+      }
+
+      .field-error {
+        color: #dc2626;
+        font-size: 12px;
+        margin-top: 4px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .field-error::before {
+        content: '';
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23dc2626'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E");
+        background-size: contain;
+      }
+    </style> 
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">S</div>
+        <h1>Вход в аккаунт</h1>
+        <p class="subtitle">Войдите, чтобы получить доступ к вашему аккаунту</p>
+
+        <form method="post" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            {% if form.errors %}
+                <div class="error-message">
+                    <ul>
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="id_login">Электронная почта</label>
+                <div class="input-wrapper">
+                    <input type="email" name="login" id="id_login" placeholder="Введите email" required>
+                                      <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg> 
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="id_password">Пароль</label>
+                <div class="input-wrapper">
+                    <input type="password" name="password" id="id_password" placeholder="Введите пароль" required>
+                                        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg> 
+                </div>
+            </div>
+
+            <div class="remember-forgot">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" name="remember" id="remember">
+                    <label for="remember">Запомнить меня</label>
+                </div>
+                <a href="{% url 'account_reset_password' %}" class="forgot-link">Забыли пароль?</a>
+            </div>
+
+            <button type="submit" class="submit-btn">Войти</button>
+        </form>
+
+        <p class="signup-link">
+            Нет аккаунта? <a href="{% url 'account_signup' %}">Зарегистрироваться</a>
+        </p>
+
+        <p class="copyright">© 2024 Все права защищены</p>
+    </div>
+</body>
+</html>

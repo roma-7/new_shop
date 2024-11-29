@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О нас - Креативный дизайн</title>
+    <!-- Добавляем новые библиотеки -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4FACFE;
+            --accent: #FF5E62;
+            --dark: #151515;
+            --light: #f8f9fa;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+            overflow-x: hidden;
+        }
+
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s;
+            mix-blend-mode: difference;
+        }
+
+        .hero {
+            min-height: 100vh;
+            background: var(--dark);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .scene {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+            opacity: 0.8;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .glitch-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            position: relative;
+            text-shadow: 0.05em 0 0 rgba(255,0,0,0.75),
+                        -0.025em -0.05em 0 rgba(0,255,0,0.75),
+                        0.025em 0.05em 0 rgba(0,0,255,0.75);
+            animation: glitch 500ms infinite;
+        }
+
+        @keyframes glitch {
+            0% {
+                text-shadow: 0.05em 0 0 rgba(255,0,0,0.75),
+                            -0.05em -0.025em 0 rgba(0,255,0,0.75),
+                            -0.025em 0.05em 0 rgba(0,0,255,0.75);
+            }
+            14% {
+                text-shadow: 0.05em 0 0 rgba(255,0,0,0.75),
+                            -0.05em -0.025em 0 rgba(0,255,0,0.75),
+                            -0.025em 0.05em 0 rgba(0,0,255,0.75);
+            }
+            15% {
+                text-shadow: -0.05em -0.025em 0 rgba(255,0,0,0.75),
+                            0.025em 0.025em 0 rgba(0,255,0,0.75),
+                            -0.05em -0.05em 0 rgba(0,0,255,0.75);
+            }
+            49% {
+                text-shadow: -0.05em -0.025em 0 rgba(255,0,0,0.75),
+                            0.025em 0.025em 0 rgba(0,255,0,0.75),
+                            -0.05em -0.05em 0 rgba(0,0,255,0.75);
+            }
+            50% {
+                text-shadow: 0.025em 0.05em 0 rgba(255,0,0,0.75),
+                            0.05em 0 0 rgba(0,255,0,0.75),
+                            0 -0.05em 0 rgba(0,0,255,0.75);
+            }
+            99% {
+                text-shadow: 0.025em 0.05em 0 rgba(255,0,0,0.75),
+                            0.05em 0 0 rgba(0,255,0,0.75),
+                            0 -0.05em 0 rgba(0,0,255,0.75);
+            }
+            100% {
+                text-shadow: -0.025em 0 0 rgba(255,0,0,0.75),
+                            -0.025em -0.025em 0 rgba(0,255,0,0.75),
+                            -0.025em -0.05em 0 rgba(0,0,255,0.75);
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section {
+            margin: 100px 0;
+            position: relative;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            cursor: pointer;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: 0.3s;
+            z-index: -1;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            color: white;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .magnetic-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        .stats {
+            background: var(--dark);
+            padding: 100px 0;
+            position: relative;
+            clip-path: polygon(0 10%, 100% 0, 100% 90%, 0% 100%);
+        }
+
+        .stat-item {
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .stat-counter {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .team-member {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .team-member img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .team-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            color: white;
+            transform: translateY(100px);
+            transition: 0.5s;
+        }
+
+        .team-member:hover .team-info {
+            transform: translateY(0);
+        }
+
+        .team-member:hover img {
+            transform: scale(1.1);
+        }
+
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: rgba(255,255,255,0.1);
+            z-index: 1000;
+        }
+
+        .scroll-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: 0.1s linear;
+        }
+
+        .parallax-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            opacity: 0.1;
+            transition: 0.3s;
+        }
+
+        .interactive-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @media (max-width: 768px) {
+            .glitch-title {
+                font-size: 2.5rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                clip-path: none;
+            }
+        }
+
+        /* Добавляем неоморфизм */
+        .neomorphic {
+            border-radius: 20px;
+            background: var(--light);
+            box-shadow: 
+                20px 20px 60px #d1d9e6,
+                -20px -20px 60px #ffffff;
+        }
+
+        /* Добавляем волнистый эффект */
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,213.3C1248,235,1344,213,1392,202.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+                .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 100px auto;
+            padding: 20px;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            transform: translateX(100px);
+        }
+
+        .timeline-item:nth-child(even).show {
+            transform: translateX(0);
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .timeline-year {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            right: -35px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .timeline-item:nth-child(even) .timeline-year {
+            left: -35px;
+            right: auto;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .value-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .achievements {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--dark), #2a2a2a);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .testimonials {
+            padding: 100px 0;
+            background: var(--light);
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin: 20px;
+            position: relative;
+        }
+
+        .testimonial-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+
+        .quote {
+            font-size: 3rem;
+            color: var(--primary);
+            position: absolute;
+            top: -20px;
+            right: 30px;
+            opacity: 0.1;
+        }
+				.team-section {
+    padding: 50px 0;
+    background-color: #f9f9f9;
+}
+.team-title h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.team-title p {
+    text-align: center;
+    color: #666;
+}
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+.team-member {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+.team-member:hover {
+    transform: translateY(-5px);
+}
+.member-image img {
+    width: 100%;
+    height: auto;
+}
+.member-content {
+    padding: 20px;
+}
+.member-name {
+    font-size: 1.25rem;
+    margin-bottom: 5px;
+}
+.member-position {
+    color: #888;
+    margin-bottom: 15px;
+}
+.member-bio {
+    font-size: 0.9rem;
+    color: #555;
+}
+.member-social {
+    margin-top: 15px;
+}
+.member-social .social-link {
+    margin: 0 5px;
+    color: #555;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+.member-social .social-link:hover {
+    color: #007bff;
+}.team-section {
+    padding: 50px 0;
+    background-color: #f9f9f9;
+}
+.team-title h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.team-title p {
+    text-align: center;
+    color: #666;
+}
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+.team-member {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+.team-member:hover {
+    transform: translateY(-5px);
+}
+.member-image img {
+    width: 100%;
+    height: auto;
+}
+.member-content {
+    padding: 20px;
+}
+.member-name {
+    font-size: 1.25rem;
+    margin-bottom: 5px;
+}
+.member-position {
+    color: #888;
+    margin-bottom: 15px;
+}
+.member-bio {
+    font-size: 0.9rem;
+    color: #555;
+}
+.member-social {
+    margin-top: 15px;
+}
+.member-social .social-link {
+    margin: 0 5px;
+    color: #555;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+.member-social .social-link:hover {
+    color: #007bff;
+}
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="scroll-progress">
+        <div class="scroll-bar"></div>
+    </div>
+
+    <!-- Герой секция -->
+    <section class="hero">
+        <div class="scene" id="scene">
+            <div class="parallax-bg" data-depth="0.2">
+                <div class="shape" style="width: 100px; height: 100px; left: 10%; top: 20%"></div>
+                <div class="shape" style="width: 150px; height: 150px; right: 20%; top: 40%"></div>
+                <div class="shape" style="width: 80px; height: 80px; left: 30%; bottom: 30%"></div>
+            </div>
+        </div>
+        <div class="hero-content" data-aos="zoom-in">
+            <h1 class="glitch-title">Будущее начинается здесь SOFTY</h1>
+            {% comment %} <p style="font-size: 1.2rem; max-width: 600px; margin: 20px auto;">
+                Мы создаём инновационные решения, которые меняют мир
+            </p> {% endcomment %}
+            {% comment %} <button class="magnetic-button">Узнать больше</button> {% endcomment %}
+        </div>
+        <div class="wave"></div>
+    </section>
+
+    <!-- О компании -->
+    <section class="container section">
+        <div class="grid">
+            <div class="card neomorphic" data-aos="fade-up">
+                <h3>Инновации</h3>
+                <p>Создаём революционные решения</p>
+                <div class="interactive-bg"></div>
+            </div>
+            <div class="card neomorphic" data-aos="fade-up" data-aos-delay="100">
+                <h3>Качество</h3>
+                <p>Внимание к каждой детали</p>
+                <div class="interactive-bg"></div>
+            </div>
+            <div class="card neomorphic" data-aos="fade-up" data-aos-delay="200">
+                <h3>Развитие</h3>
+                <p>Постоянно движемся вперёд</p>
+                <div class="interactive-bg"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Статистика -->
+    <section class="stats">
+        <div class="container">
+            <div class="grid">
+                <div class="stat-item" data-aos="zoom-in">
+                    <span class="stat-counter" data-target="500">0</span>
+                    <p>Проектов</p>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
+                    <span class="stat-counter" data-target="98">0</span>
+                    <p>Довольных клиентов</p>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
+                    <span class="stat-counter" data-target="50">0</span>
+                    <p>Экспертов</p>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
+                    <span class="stat-counter" data-target="24">0</span>
+                    <p>Часа поддержки</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Команда -->
+<section class="team-section">
+    <div class="container">
+        <div class="team-title" data-aos="fade-up">
+            <h2>Команда Softy</h2>
+            <p>Профессионалы, которые делают невозможное возможным</p>
+        </div>
+        <div class="team-grid">
+            <div class="team-member" data-aos="fade-up">
+                <div class="member-image">
+                    <img src="/media/softy/Nakenov.jpg">
+                </div>
+                <div class="member-content">
+                    <h3 class="member-name">Nakenov Nursultan</h3>
+                    <div class="member-position">Со-основатель Softy</div>
+                    <p class="member-bio">10+ лет опыта в создании и развитии инновационных проектов. Визионер и стратег.</p>
+                    <div class="member-social">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-member" data-aos="fade-up" data-aos-delay="100">
+                <div class="member-image">
+                    <img src="/media/softy/Abdyzhparov.jpg" alt="Иван Смирнов">
+                </div>
+                <div class="member-content">
+                    <h3 class="member-name">Esengeldiev Aziret</h3>
+                    <div class="member-position">Со-основатель Softy</div>
+                    <p class="member-bio">Эксперт в области разработки высоконагруженных систем и искусственного интеллекта.</p>
+                    <div class="member-social">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-member" data-aos="fade-up" data-aos-delay="200">
+                <div class="member-image">
+                    <img src="/media/softy/Umotbekov.jpg">
+                </div>
+                <div class="member-content">
+                    <h3 class="member-name">Umotbekov Ramazan</h3>
+                    <div class="member-position">Со-основатель Softy</div>
+                    <p class="member-bio">Создает уникальные визуальные решения, которые выделяют бренды среди конкурентов.</p>
+                    <div class="member-social">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-behance"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Скрипты -->
+    <script>
+        // Инициализация AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Инициализация Parallax
+        var scene = document.getElementById('scene');
+        var parallaxInstance = new Parallax(scene);
+
+        // Кастомный курсор
+        document.addEventListener('mousemove', function(e) {
+            const cursor = document.querySelector('.cursor');
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Эффект увеличения курсора при наведении на кликабельные элементы
+        document.querySelectorAll('button, .card, .team-member').forEach(elem => {
+            elem.addEventListener('mouseenter', () => {
+                document.querySelector('.cursor').style.transform = 'scale(2)';
+            });
+            elem.addEventListener('mouseleave', () => {
+                document.querySelector('.cursor').style.transform = 'scale(1)';
+            });
+        });
+
+        // Прогресс скролла
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.querySelector('.scroll-bar');
+            const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = window.scrollY;
+            
+            scrollProgress.style.width = `${(scrolled / scrollable) * 100}%`;
+        });
+
+        // Анимация счетчиков
+        const counters = document.querySelectorAll('.stat-counter');
+        
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            const duration = 2000; // 2 секунды
+            const step = target / (duration / 16); // 60 FPS
+            let current = 0;
+            
+            const updateCounter = () => {
+                current += step;
+                if (current < target) {
+                    counter.textContent = Math.round(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.textContent = target;
+                }
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    updateCounter();
+                    observer.unobserve(counter);
+                }
+            });
+            
+            observer.observe(counter);
+        });
+
+        // Магнитные кнопки
+        document.querySelectorAll('.magnetic-button').forEach(button => {
+            button.addEventListener('mousemove', (e) => {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                button.style.transform = `translate(
+                    ${(x - rect.width / 2) / 10}px,
+                    ${(y - rect.height / 2) / 10}px
+                )`;
+            });
+
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = '';
+            });
+        });
+
+        // Интерактивный фон для карточек
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const bg = card.querySelector('.interactive-bg');
+                if (bg) {
+                    bg.style.background = `radial-gradient(
+                        circle at ${x}px ${y}px,
+                        rgba(255,255,255,0.1) 0%,
+                        rgba(255,255,255,0) 50%
+                    )`;
+                }
+            });
+        });
+    </script>
+</body>
