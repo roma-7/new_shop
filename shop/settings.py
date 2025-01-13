@@ -86,6 +86,10 @@ ROOT_URLCONF = "shop.urls"
 SITE_ID = 1
 
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+WHITENOISE_USE_FINDERS = True
+
+
 CELERY_TASK_ALWAYS_EAGER = True
 CELERY_TASK_EAGER_PROPAGATES = True
 CELERY_TIMEZONE = "Asia/Bishkek"

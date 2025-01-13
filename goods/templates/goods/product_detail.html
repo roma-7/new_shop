@@ -708,6 +708,7 @@
           Вы действительно хотите продать товар в количестве
           <span id="confirm-quantity"></span> шт.?
         </p>
+        {% csrf_token %}
         <div class="modal-buttons">
           <button id="confirmSell" class="cart-button">
             <i class="fas fa-check"></i>
