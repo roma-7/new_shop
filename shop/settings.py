@@ -125,8 +125,12 @@ AUTHENTICATION_BACKENDS = (
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "shop_db",
+        "USER": "shop_user",
+        "PASSWORD": "shop_password123",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
